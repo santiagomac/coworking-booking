@@ -1,9 +1,11 @@
 package com.santiagomac.coworkingbooking.infrastructure.driven_adapter.adapter;
 
+import com.santiagomac.coworkingbooking.domain.model.dto.UserDto;
 import com.santiagomac.coworkingbooking.domain.repository.UserGateway;
 import com.santiagomac.coworkingbooking.infrastructure.driven_adapter.entity.User;
 import com.santiagomac.coworkingbooking.infrastructure.driven_adapter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -12,16 +14,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserRepositoryAdapter implements UserGateway {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
+  private final ModelMapper modelMapper;
 
 
-    @Override
-    public Optional<User> findByEmail(String email) {
-        return this.userRepository.findByEmail(email);
-    }
+  @Override
+  public Optional<User> findByEmail(String email) {
+    return this.userRepository.findByEmail(email);
+  }
 
-    @Override
-    public User save(User user) {
-        return this.userRepository.save(user);
-    }
+  @Override
+  public UserDto save(User user) {
+    return modelMapper.map(this.userRepository.save(user), UserDto.class);
+  }
 }

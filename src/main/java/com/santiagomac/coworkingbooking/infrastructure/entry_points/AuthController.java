@@ -4,6 +4,7 @@ import com.santiagomac.coworkingbooking.application.JwtService;
 import com.santiagomac.coworkingbooking.application.dto.LoginResponse;
 import com.santiagomac.coworkingbooking.application.dto.LoginUserDto;
 import com.santiagomac.coworkingbooking.application.dto.RegisterUserDto;
+import com.santiagomac.coworkingbooking.domain.model.dto.UserDto;
 import com.santiagomac.coworkingbooking.domain.service.AuthenticationService;
 import com.santiagomac.coworkingbooking.infrastructure.driven_adapter.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +23,13 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registerUser = authenticationService.signUp(registerUserDto);
+    public ResponseEntity<UserDto> register(@RequestBody RegisterUserDto registerUserDto) {
+        UserDto registerUser = authenticationService.signUp(registerUserDto);
 
         return ResponseEntity.ok(registerUser);
     }
+
+    /// /api/login
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {

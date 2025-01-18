@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/api/auth/**")
+                                .requestMatchers("/api/auth/**", "/h2-console/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())

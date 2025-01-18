@@ -1,16 +1,21 @@
 spring:
   application:
-    name: ${APPLICATION_NAME}
+    name: ${APPLICATION_NAME:CoworkingBooking}
   datasource:
     url: jdbc:h2:mem:test
     driver-class-name: org.h2.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME:santiagomac}
+    password: ${DB_PASSWORD:santim100}
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 security:
   jwt:
-    secret-key: ${SECRET_KEY}
-    expiration-time: ${EXPIRATION_TIME}
+    secret-key: ${SECRET_KEY:51674f69596048fdbfd5139b6eeda2187y81251674f695960139b6eeda2187y}
+    expiration-time: ${EXPIRATION_TIME:3600000}

@@ -15,35 +15,36 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class ApplicationConfig {
 
-    private final UserGateway userRepository;
+  private final UserGateway userRepository;
 
-    public ApplicationConfig(UserGateway userRepository) {
-        this.userRepository = userRepository;
-    }
+  public ApplicationConfig(UserGateway userRepository) {
+    this.userRepository = userRepository;
+  }
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
-    }
+  @Bean
+  UserDetailsService userDetailsService() {
+    return username -> userRepository.findByEmail(username)
+        .orElseThrow(() -> new UsernameNotFoundException(username));
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+      throws Exception {
+    return config.getAuthenticationManager();
+  }
 
-    @Bean
-    AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+  @Bean
+  AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
-        provider.setUserDetailsService(userDetailsService());
-        provider.setPasswordEncoder(passwordEncoder());
+    provider.setUserDetailsService(userDetailsService());
+    provider.setPasswordEncoder(passwordEncoder());
 
-        return provider;
-    }
+    return provider;
+  }
 }
